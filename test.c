@@ -22,6 +22,9 @@ void TestStack()
 	StackDestory(&st);
 
 }
+
+
+
 void TestQueue()
 {
 	Queue q;
