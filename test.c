@@ -1,26 +1,13 @@
 #define _CRT_SECURE_NO_WARNINGS 1 
-#include"Sort.h"
-
-
-void TestInsertSort()
-{
-	int a[] = { 3,1,4,1,7,9,8,2,0,5 };
-	PrintArray(a, sizeof(a) / sizeof(a[0]));
-	InsertSort(a, sizeof(a) / sizeof(a[0]));
-	PrintArray(a, sizeof(a) / sizeof(a[0]));
-
-}
-void TestShellSort()
-{
-	int a[] = { 9,8,7,6,5,4,3,2,1,0 };
-	PrintArray(a, sizeof(a) / sizeof(a[0]));
-	ShellSort(a, sizeof(a) / sizeof(a[0]));
-	PrintArray(a, sizeof(a) / sizeof(a[0]));
-
-}
+#include "SList.h"
 int main()
 {
-	TestInsertSort();
-	TestShellSort();
+	SListNode* pList = NULL;//刷题的时候一般就是给一个头指针
+	SListPushBack(&pList, 1);
+	SListPushBack(&pList, 2);
+	SListPushBack(&pList, 3);
+	SListPushBack(&pList, 4);
+
+	SListPrint(pList);
 	return 0;
 }
