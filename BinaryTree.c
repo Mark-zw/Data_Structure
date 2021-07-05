@@ -77,3 +77,12 @@ BTNode* CreateNode(BTDataType x)
 	node->right = NULL;
 	return node;
 }
+//二叉树第k层结点个数
+int BinaryTreeLevelKSize(BTNode* root, int k)
+{
+	if (root == NULL)
+		return 0;
+	if (k == 1)
+		return 1;
+	return BinaryTreeLevelKSize(root->left, k - 1) + BinaryTreeLevelKSize(root->right, k - 1);
+}
