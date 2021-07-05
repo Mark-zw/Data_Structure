@@ -24,3 +24,6 @@ void BinaryTreePostOrder(BTNode* root);
 
 //构建伪二叉树
 BTNode* CreateNode(int x);
+
+//二叉树第k层结点个数
+int BinaryTreeLevelKSize(BTNode* root, int k);
