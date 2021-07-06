@@ -21,6 +21,7 @@ int main()
 	printf("TreeSize:%d \n", TreeSize(A));
 
 	printf("TreeLeafSize:%d \n", TreeLeafSize(A));
+	printf("%d\n", BinaryTreeLevelKSize(A, 3));
 	return 0;
 }
 
