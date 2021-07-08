@@ -43,18 +43,85 @@ void HeapInit(Heap* php, HPDataType* a, int n)
 	memcpy(php->_a, a, sizeof(HPDataType) * n);
 	php->_size = n;
 	php->_capacity = n;
+}
+//小堆
+//堆排序
+void HeapSort(int* a, int n)
+{
 	//构建堆
 	for (int i = (n - 1 - 1) / 2; i >= 0; --i)
 	{
-		AdjustDown(php->_a, php->_size, i);
+		AdjustDown(a, n, i);
 	}
-}
-//小堆
-  
+	//时间复杂度？
+	//假设树有N个结点，树的高度 logN
+	//注意这里的时间复杂度不是N*logN，是O(N)
+	int end = n - 1;
+	while (end)
+	{ 
+		Swap(&a[0], &a[end]);
+		//再选择次小的
+		AdjustDown(a, end, 0);
+		end--;
+	}
+ }
 
 //销毁
-void HeapDestory(Heap* php);
+void HeapDestory(Heap* php)
+{
+	assert(php);
+	free(php->_a);
+	php->_a = NULL;
+	php->_capacity = 0;
+	php->_size = 0;
+}
+void AdjustUp(HPDataType* a, int n, int child)
+{
+	int parent = (child - 1) / 2;
+	while (child > 0)
+	{
+		if (a[child] < a[parent])
+		{
+			Swap(&a[child],&a[parent]);
+			child = parent;
+			parent = (child - 1) / 2;
+		}
+		else
+		{
+			break;
+		}
+
+	}
+}
+
 //插入
-void HeapPush(Heap* php, HPDataType x);
+void HeapPush(Heap* php, HPDataType x)
+{
+	assert(php);
+	//扩容检查
+	if (php->_size == php->_capacity)
+	{
+		php->_capacity *= 2;
+		HPDataType* tmp = realloc(php->_a, sizeof(HeapDestory) * php->_capacity);
+		php->_a = tmp;
+	}
+	//插入数据
+	php->_a[php->_size++] = x;
+	//向上调整
+
+}
 //删除
-void HeapPop(Heap* php);
+void HeapPop(Heap* php)
+{
+	//删除堆顶的数据
+	assert(php);
+	assert(php->_size > 0);
+	Swap(&php->_a[0], &php->_a[php->_size - 1]);
+	php->_size--;
+	AdjustDown(php->_a, php->_size, 0);
+}
+HPDataType HeapTop(Heap* php)
+{
+	assert(php);
+	return php->_a[0];
+}
