@@ -1,43 +1,64 @@
-#define _CRT_SECURE_NO_WARNINGS 1 
 #pragma once
 #include<stdio.h>
-#include<assert.h>
+#include<stdlib.h>
 
-//最初版本
+//顺序的静态结构
+// 1.最初版本
 //struct SeqList
 //{
-//	int data[100];//一个定长的数组
-//	struct SeqList* next;//指向下一个结点的地址的指针
+//	int arr[10];
+//	int size;
 //};
 
-//进行优化
-//1.这个结构体中的数据类型是int，这样就将数组的类型局限了，可能后面我们需要处理char、double或各种类型的数据
-//为了数组类型的通用，我们可以将这个int进行类型重定义，后面如果有涉及到数据类型的修改，直接改动重定义部分的类型
-//不涉及到结构体内数组元素类型的修改---便携性和通用性
-//2.基于同样的道理，数组的大小100在结构体内局限性太强，为了方便数组大小实际应用过程中的调整
-//可以将100用#define N,宏命令---便携性和通用性
-//3.定义的结构体类型是 struct SeqList 这个类型名称太长，不方便我们后续写代码，可以对其进行类型重定义
+//2.优化版本
+//#define MAX_SIZE 100
+//typedef int SLDatatype;
+//typedef struct SeqList
+//{
+//	int arr[MAX_SIZE];
+//	int size;
+//}SeqList;
 
-//优化版本
+//顺序表的动态结构
+//1.最初版本
+//struct SeqList
+//{
+//	int* arr;//用来指向动态开辟的数组
+//	int size;//当前已使用空间的个数
+//	int capacity;//动态数组的最大容量
+//};
 
-#define N 100
-typedef int SLDataType;//SL是SeqLsit的缩写，DataType表示数据类型
-
+//2.优化版本
+#define Init_SIZE 1
+typedef int SLDatatype;//方便对不同类型的处理和替换
 typedef struct SeqList
 {
-	SLDataType data[N];//定长数组
-	//struct SeqList* next;//或者也可以用 SeqList* next;
-	size_t size;//有效数据的个数
-}SeqList;
+	SLDatatype* arr;
+	int size;
+	int capacity;
+}SL;
 
-//初始化
-void SeqListInit(SeqList* pList);
+//对数据的基本操作：创销增删查改  ---需要相应的接口
+//额外功能：打印、判长、判空
 
-//尾插
-void SeqListPushBack(SeqList* pList, SLDataType x);
-
-//尾删
-void SeqListPopBack(SeqList* pList);
+//创建---初始化
+void SeqListInit(SL* seq);
+//销毁
+void SeqListDestory(SL* seq);
 
 //打印
-void SeqListPrint(SeqList* pList);
+void SeqListPrint(SL* seq);
+
+//增加数据其实就是插入数据
+//按照插入数据的位置，可分为头插、尾插、任意位置插入
+//实际中，若实现了任意位置插入，头插、尾插可以复用这部分代码
+
+//尾插
+void SeqListPushBack(SL* seq, SLDatatype x);
+//头插
+void SeqListPushFront(SL* seq, SLDatatype x);
+
+//尾删
+void SeqListPopBack(SL* seq);
+//头删
+void SeqListPopFront(SL* seq);

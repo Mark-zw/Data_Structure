@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{15e5d188-be90-49ee-a63a-ce4f51f20d70}</ProjectGuid>
+    <ProjectGuid>{b3247d3f-d6ec-4cd1-989d-b1918329cb9d}</ProjectGuid>
     <RootNamespace>SeqList</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -139,11 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="SeqList.c" />
-    <ClCompile Include="test.c" />
+    <ClInclude Include="SeqList.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SeqList.h" />
+    <ClCompile Include="SeqLish.c" />
+    <ClCompile Include="test.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

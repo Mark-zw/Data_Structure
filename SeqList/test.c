@@ -1,33 +1,35 @@
-#define _CRT_SECURE_NO_WARNINGS 1 
+#define _CRT_SECURE_NO_WARNINGS 1
 #include"SeqList.h"
-SeqList;
-void SeqListTest1()
+TestSeqList1()
 {
-	SeqList SL;
-	SeqList* pList = &SL;
-	SeqListInit(pList);
-	SeqListPrint(pList);
+	SL seq;
+	SeqListInit(&seq);
+	SeqListPrint(&seq);
 
-	SeqListPushBack(pList, 1);
-	SeqListPushBack(pList, 2);
-	SeqListPushBack(pList, 3);
-	SeqListPushBack(pList, 4);
+	SeqListPushBack(&seq, 0);
+	SeqListPushBack(&seq, 1);
+	SeqListPushBack(&seq, 2);
+	SeqListPushBack(&seq, 3);
+	SeqListPrint(&seq);
 
-	SeqListPrint(pList);
-	printf("\n_______________________\n");
+	SeqListPushFront(&seq, 1);
+	SeqListPushFront(&seq, 2);
+	SeqListPushFront(&seq, 3);
+	SeqListPrint(&seq);
 
-	SeqListPopBack(pList);
-	SeqListPopBack(pList);
-	SeqListPopBack(pList);
-	//SeqListPopBack(pList);
-	//SeqListPopBack(pList);
+	SeqListPopBack(&seq);
+	SeqListPrint(&seq);
 
-	SeqListPrint(pList);
-	printf("\n_______________________\n");
+	SeqListPopFront(&seq);
+	SeqListPrint(&seq);
+
+	SeqListDestory(&seq);
+	SeqListPrint(&seq);
+
 }
 
 int main()
 {
-	SeqListTest1();
+	TestSeqList1();
 	return 0;
-}
+ }
