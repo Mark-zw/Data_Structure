@@ -1,42 +1,64 @@
-#define _CRT_SECURE_NO_WARNINGS 1 
+#pragma once
 #include<stdio.h>
-#include<assert.h>
 #include<stdlib.h>
 
-//最初版本
+//顺序的静态结构
+// 1.最初版本
 //struct SeqList
 //{
-//	int* p;//指向动态开辟空间的指针
-//	int size;//有效元素的个数
-//	int capacity;//动态开辟空间的容量
+//	int arr[10];
+//	int size;
 //};
-//优化版本
-typedef int SLDataType;
+
+//2.优化版本
+//#define MAX_SIZE 100
+//typedef int SLDatatype;
+//typedef struct SeqList
+//{
+//	int arr[MAX_SIZE];
+//	int size;
+//}SeqList;
+
+//顺序表的动态结构
+//1.最初版本
+//struct SeqList
+//{
+//	int* arr;//用来指向动态开辟的数组
+//	int size;//当前已使用空间的个数
+//	int capacity;//动态数组的最大容量
+//};
+
+//2.优化版本
+#define Init_SIZE 1
+typedef int SLDatatype;//方便对不同类型的处理和替换
 typedef struct SeqList
 {
-	SLDataType* array;//指向动态开辟空间的指针
-	size_t size;//有效元素的个数
-	size_t capacity;//动态开辟空间的容量
-}SeqList;
-//初始化
-void SeqListInit(SeqList* pList);
+	SLDatatype* arr;
+	int size;
+	int capacity;
+}SL;
+
+//对数据的基本操作：创销增删查改  ---需要相应的接口
+//额外功能：打印、判长、判空
+
+//创建---初始化
+void SeqListInit(SL* seq);
 //销毁
-void SeqListDestory(SeqList* pList);
+void SeqListDestory(SL* seq);
+
 //打印
-void SeqListPrint(SeqList* pList);
-//空间检查，如果满了，进行增容
-void CheckCapacity(SeqList* pList);
+void SeqListPrint(SL* seq);
+
+//增加数据其实就是插入数据
+//按照插入数据的位置，可分为头插、尾插、任意位置插入
+//实际中，若实现了任意位置插入，头插、尾插可以复用这部分代码
+
 //尾插
-void SeqListPushBack(SeqList* pList, SLDataType x);
-//尾删
-void SeqListPopBack(SeqList* pList);
+void SeqListPushBack(SL* seq, SLDatatype x);
 //头插
-void SeqListPushFront(SeqList* pList, SLDataType x);
+void SeqListPushFront(SL* seq, SLDatatype x);
+
+//尾删
+void SeqListPopBack(SL* seq);
 //头删
-void SeqListPopFront(SeqList* pList);
-//查找
-int SeqListFind(SeqList* pList, SLDataType x);
-//在任意位置插入
-void SeqListInsert(SeqList* pList, size_t pos, SLDataType x);
-//在任意位置删除
-void SeqListErase(SeqList* pList, size_t pos);
+void SeqListPopFront(SL* seq);
