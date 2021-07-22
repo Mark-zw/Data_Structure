@@ -53,6 +53,9 @@ void SeqListPrint(SL* seq);
 //按照插入数据的位置，可分为头插、尾插、任意位置插入
 //实际中，若实现了任意位置插入，头插、尾插可以复用这部分代码
 
+//扩容检查
+void CheckCapacity(SL* seq);
+
 //尾插
 void SeqListPushBack(SL* seq, SLDatatype x);
 //头插
@@ -62,3 +65,17 @@ void SeqListPushFront(SL* seq, SLDatatype x);
 void SeqListPopBack(SL* seq);
 //头删
 void SeqListPopFront(SL* seq);
+
+//任意位置插入
+void SeqListInsert(SL* seq, int pos, SLDatatype x);
+//任意位置删除
+void SeqListErase(SL* seq, int pos);
+
+//查找---按值查找
+int SeqListFind(SL* seq, SLDatatype x);
+
+//查找---按位查找
+int SeqListGetElem(SL* seq, int pos);
+
+//修改
+void SeqListModify(SL* seq, int pos, SLDatatype x);
