@@ -23,6 +23,24 @@ TestSeqList1()
 	SeqListPopFront(&seq);
 	SeqListPrint(&seq);
 
+	SeqListInsert(&seq, 3, 7);
+	SeqListPrint(&seq);
+
+	SeqListErase(&seq, 4);
+	SeqListPrint(&seq);
+
+	int ret = SeqListFind(&seq, 3);
+	if (ret == -1)
+		printf("Can not find!\n");
+	else
+		printf("Find it!--%d\n", ret);
+
+	SeqListModify(&seq, 3, 99);
+	SeqListPrint(&seq);
+
+	int ret2 = SeqListGetElem(&seq, 1);
+	printf("%d\n", ret2);
+
 	SeqListDestory(&seq);
 	SeqListPrint(&seq);
 
