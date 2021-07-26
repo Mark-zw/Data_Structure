@@ -1,53 +1,41 @@
-#define _CRT_SECURE_NO_WARNINGS 1
-#include"SeqList.h"
-TestSeqList1()
+﻿#define _CRT_SECURE_NO_WARNINGS 1 
+#include"SList.h"
+
+void TestSList1()
 {
-	SL seq;
-	SeqListInit(&seq);
-	SeqListPrint(&seq);
+	SList *pList = NULL;
+	SListPushBack(&pList, 1);
+	SListPushBack(&pList, 2);
+	SListPushBack(&pList, 3);
+	SListPushBack(&pList, 4);
+	SListPrint(&pList);
 
-	SeqListPushBack(&seq, 0);
-	SeqListPushBack(&seq, 1);
-	SeqListPushBack(&seq, 2);
-	SeqListPushBack(&seq, 3);
-	SeqListPrint(&seq);
+	SListPushFront(&pList, 5);
+	SListPushFront(&pList, 6);
+	SListPushFront(&pList, 7);
+	SListPushFront(&pList, 8);
+	SListPrint(&pList);
 
-	SeqListPushFront(&seq, 1);
-	SeqListPushFront(&seq, 2);
-	SeqListPushFront(&seq, 3);
-	SeqListPrint(&seq);
+	SListPopBack(&pList);
+	SListPrint(&pList);
 
-	SeqListPopBack(&seq);
-	SeqListPrint(&seq);
-
-	SeqListPopFront(&seq);
-	SeqListPrint(&seq);
-
-	SeqListInsert(&seq, 3, 7);
-	SeqListPrint(&seq);
-
-	SeqListErase(&seq, 4);
-	SeqListPrint(&seq);
-
-	int ret = SeqListFind(&seq, 3);
-	if (ret == -1)
-		printf("Can not find!\n");
-	else
-		printf("Find it!--%d\n", ret);
-
-	SeqListModify(&seq, 3, 99);
-	SeqListPrint(&seq);
-
-	int ret2 = SeqListGetElem(&seq, 1);
-	printf("%d\n", ret2);
-
-	SeqListDestory(&seq);
-	SeqListPrint(&seq);
 
 }
-
 int main()
 {
-	TestSeqList1();
+	TestSList1();
+	//SList* s1 = (SList*)malloc(sizeof(SList));
+	//SList* s2 = (SList*)malloc(sizeof(SList));
+	//SList* s3 = (SList*)malloc(sizeof(SList));
+	//SList* s4 = (SList*)malloc(sizeof(SList));
+	//s1->data = 1;
+	//s1->next = s2;
+	//s2->data = 2;
+	//s2->next = s3;
+	//s3->data = 3;
+	//s3->next = s4;
+	//s4->data = 4;
+	//s4->next = NULL;
+	//SListPrint(s1);
 	return 0;
- }
+}
