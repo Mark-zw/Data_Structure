@@ -28,11 +28,17 @@ void SListPushBack(SList** ppList, SLDatatype x);
 void SListPopFront(SList** ppList);
 //尾删
 void SListPopBack(SList** ppList);
-//在任意位置插入
-void SListInsert(SList* pList, int pos, SLDatatype x);
-//在任意位置删除
-void SListErase(SList* pList, int pos, SLDatatype x);
+//在任意位置之后插入
+void SListInsertafter(SNode* pos, SLDatatype x);
+//在任意位置之后删除
+void SListEraseafter(SNode* pos);
+
+//在任意位置之前插入
+void SListInsertbefore(SList* pList,SNode* pos, SLDatatype x);
+//在任意位置删除当前位置
+void SListErasecur(SList* pList,SNode* pos);
+
 //查找
-int SListSearch(SList* pList, SLDatatype x);
+SNode* SListSearch(SList* pList, SLDatatype x);
 //修改
 void SListModify(SList* pList, int pos, SLDatatype x);
