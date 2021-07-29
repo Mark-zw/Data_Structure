@@ -19,6 +19,38 @@ void TestSList1()
 	SListPopBack(&pList);
 	SListPrint(&pList);
 
+	SListPopFront(&pList);
+	//SListPopFront(&pList);
+	//SListPopFront(&pList);
+	//SListPopFront(&pList);
+	//SListPopFront(&pList);
+	//SListPopFront(&pList);
+
+	SListPrint(&pList);
+
+	SNode* ret = SListSearch(pList, 3);
+	if (ret != NULL)
+	{
+		//兼具修改的作用
+		printf("%d ", ret->data);
+		//ret->data = 30;
+		//printf("%d ", ret->data);
+
+	}
+	else
+	{
+		printf("Can not find it!\n");
+	}
+	SListInsertafter(ret, 33);
+	SListPrint(&pList);
+	SListInsertbefore(&pList, ret, 99);
+	SListPrint(&pList);
+
+	SListEraseafter(ret);
+	SListPrint(&pList);
+
+	SListErasecur(&pList, pList);
+	SListPrint(&pList);
 
 }
 int main()
