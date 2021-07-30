@@ -1,73 +1,54 @@
-﻿#define _CRT_SECURE_NO_WARNINGS 1 
-#include"SList.h"
-
-void TestSList1()
+#define _CRT_SECURE_NO_WARNINGS 1 
+#include"DList.h"
+void TestDList1()
 {
-	SList *pList = NULL;
-	SListPushBack(&pList, 1);
-	SListPushBack(&pList, 2);
-	SListPushBack(&pList, 3);
-	SListPushBack(&pList, 4);
-	SListPrint(&pList);
+	DList* pList = DListInit();
+	DListPrint(pList);
 
-	SListPushFront(&pList, 5);
-	SListPushFront(&pList, 6);
-	SListPushFront(&pList, 7);
-	SListPushFront(&pList, 8);
-	SListPrint(&pList);
+	DListPushBack(pList, 0);
+	DListPushBack(pList, 1);
+	DListPushBack(pList, 2);
+	DListPushBack(pList, 3);
+	DListPushBack(pList, 4);
+	DListPushBack(pList, 5);
+	DListPrint(pList);
+	DListPushFront(pList, 1);
+	DListPushFront(pList, 2);
+	DListPushFront(pList, 3);
+	DListPushFront(pList, 4);
+	DListPushFront(pList, 5);
+	DListPrint(pList);
 
-	SListPopBack(&pList);
-	SListPrint(&pList);
+	DListPopBack(pList);
+	DListPopBack(pList);
+	DListPopBack(pList);
+	DListPopBack(pList);
+	DListPopBack(pList);
+	DListPrint(pList);
 
-	SListPopFront(&pList);
-	//SListPopFront(&pList);
-	//SListPopFront(&pList);
-	//SListPopFront(&pList);
-	//SListPopFront(&pList);
-	//SListPopFront(&pList);
+	int ret = DListEmpty(pList);
+	printf("ret == %d\n", ret);
+	int length = DListLength(pList);
+	printf("length == %d\n", length);
 
-	SListPrint(&pList);
+	DListPopFront(pList);
+	DListPopFront(pList);
+	DListPopFront(pList);
+	DListPrint(pList);
 
-	SNode* ret = SListSearch(pList, 3);
-	if (ret != NULL)
+	DNode* pos = DListFind(pList, 1);
+	if (pos)
 	{
-		//兼具修改的作用
-		printf("%d ", ret->data);
-		//ret->data = 30;
-		//printf("%d ", ret->data);
-
+		DListInsert(pos, 40);
 	}
-	else
-	{
-		printf("Can not find it!\n");
-	}
-	SListInsertafter(ret, 33);
-	SListPrint(&pList);
-	SListInsertbefore(&pList, ret, 99);
-	SListPrint(&pList);
+	DListPrint(pList);
 
-	SListEraseafter(ret);
-	SListPrint(&pList);
-
-	SListErasecur(&pList, pList);
-	SListPrint(&pList);
+	DListDestory(&pList);
+	DListPrint(pList);
 
 }
 int main()
 {
-	TestSList1();
-	//SList* s1 = (SList*)malloc(sizeof(SList));
-	//SList* s2 = (SList*)malloc(sizeof(SList));
-	//SList* s3 = (SList*)malloc(sizeof(SList));
-	//SList* s4 = (SList*)malloc(sizeof(SList));
-	//s1->data = 1;
-	//s1->next = s2;
-	//s2->data = 2;
-	//s2->next = s3;
-	//s3->data = 3;
-	//s3->next = s4;
-	//s4->data = 4;
-	//s4->next = NULL;
-	//SListPrint(s1);
+	TestDList1();
 	return 0;
 }
