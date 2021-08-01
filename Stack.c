@@ -4,68 +4,68 @@
 void StackInit(Stack* pst)
 {
 	assert(pst);
-	//第一种方式
-	//pst->_a = NULL;
-	//pst->_top = 0;
-	//pst->_capacity = 0;
-
-	//第二种方式
-	pst->_a = malloc(sizeof(STDataType) * 4);
-	pst->_top = 0;
-	pst->_capacity = 4;
-
+	pst->capacity = 2;
+	pst->top = 0;
+	pst->arr = (STDataType*)malloc(pst->capacity * sizeof(STDataType));
 }
 //销毁
-void StackDestory(Stack* pst)
+void StakDestroy(Stack* pst)
 {
 	assert(pst);
-	free(pst->_a);
-	pst->_a = NULL;
-	pst->_top = pst->_capacity = 0;
+	free(pst->arr);
+	pst->arr = NULL;
+	pst->top = 0;
+	pst->capacity = 0;
 }
-//入栈/进栈
+//增容检测
+void CheckCapacity(Stack* pst)
+{
+	assert(pst);
+	if (pst->top == pst->capacity)
+	{
+		pst->capacity *= 2;
+		STDataType* ptr = (STDataType*)realloc(pst->arr, pst->capacity * sizeof(STDataType));
+		if (ptr == NULL)
+		{
+			printf("realloc fail!\n");
+			exit(-1);//-1给进程的，结束程序
+		}
+		pst->arr = ptr;
+	}
+}
+
+//入栈
 void StackPush(Stack* pst, STDataType x)
 {
 	assert(pst);
-	//空间不够则增容
-	if (pst->_top == pst->_capacity)
-	{
-		pst->_capacity *= 2;
-		STDataType* tmp = realloc(pst->_a, sizeof(STDataType) * pst->_capacity);
-		if (tmp == NULL)
-		{
-			printf("realloc fail!\n");
-			exit(-1);
-		}
-	}
-	pst->_a[pst->_top] = x;
-	pst->_top++;
+	CheckCapacity(pst);
+	pst->arr[pst->top] = x;
+	pst->top++;
 }
 //出栈
 void StackPop(Stack* pst)
 {
 	assert(pst);
-	assert(pst->_top > 0);
-
-	--pst->_top;
+	assert(!StackEmpty(pst));
+	pst->top--;
 }
-//栈的元素个数
-int StackSize(Stack* pst)
-{
-	assert(pst);
-	return pst->_top;
-}
-//栈状态判断 返回1是空，返回0是非空
-int StackEmpty(Stack* pst)
-{
-	assert(pst);
-	//return pst->_top == 0 ? 1 : 0;
-	return !pst->_top;
-}
-//获取栈顶的数据
+//获取栈顶元素
 STDataType StackTop(Stack* pst)
 {
+	return pst->arr[pst->top - 1];
+}
+//检测栈是否为空，空-非零 非空-0
+bool StackEmpty(Stack* pst)
+{
+	//if (pst->top == 0)
+	//	return 1;
+	//else
+	//	return 0;
 	assert(pst);
-	assert(pst->_top > 0);
-	return pst->_a[pst->_top - 1];
+	return pst->top == 0;
+}
+//获取栈中有效元素的个数
+int StackSize(Stack* pst)
+{
+	return pst->top;
 }
