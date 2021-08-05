@@ -1,54 +1,27 @@
-#define _CRT_SECURE_NO_WARNINGS 1 
-#include"DList.h"
-void TestDList1()
-{
-	DList* pList = DListInit();
-	DListPrint(pList);
+#define _CRT_SECURE_NO_WARNINGS 1
+#include"BinaryTree.h"
+int main(){
+	BTNode* a = CreateTreeNode('A');
+	BTNode* b = CreateTreeNode('B');
+	BTNode* c = CreateTreeNode('C');
+	BTNode* d = CreateTreeNode('D');
+	BTNode* e = CreateTreeNode('E');
+	BTNode* f = CreateTreeNode('F');
+	a->left = b;
+	b->left = d;
+	a->right = c;
+	c->left = e;
+	c->right = f;
+	BinaryTreePreOrder(a);
+	printf("\n");
+	BinaryTreeInOrder(a);
+	printf("\n");
+	BinaryTreePostOrder(a);
+	printf("\n");
+	printf("TreeSize = %d \n", TreeSize(a));
+	printf("TreeLeafSize = %d \n", TreeLeafSize(a));
+	printf("KLevelTreeSize = %d \n", BinaryTreeLevelKSize(a,3));
+	printf("BinaryDepth = %d \n", BinaryDepth(a));
 
-	DListPushBack(pList, 0);
-	DListPushBack(pList, 1);
-	DListPushBack(pList, 2);
-	DListPushBack(pList, 3);
-	DListPushBack(pList, 4);
-	DListPushBack(pList, 5);
-	DListPrint(pList);
-	DListPushFront(pList, 1);
-	DListPushFront(pList, 2);
-	DListPushFront(pList, 3);
-	DListPushFront(pList, 4);
-	DListPushFront(pList, 5);
-	DListPrint(pList);
-
-	DListPopBack(pList);
-	DListPopBack(pList);
-	DListPopBack(pList);
-	DListPopBack(pList);
-	DListPopBack(pList);
-	DListPrint(pList);
-
-	int ret = DListEmpty(pList);
-	printf("ret == %d\n", ret);
-	int length = DListLength(pList);
-	printf("length == %d\n", length);
-
-	DListPopFront(pList);
-	DListPopFront(pList);
-	DListPopFront(pList);
-	DListPrint(pList);
-
-	DNode* pos = DListFind(pList, 1);
-	if (pos)
-	{
-		DListInsert(pos, 40);
-	}
-	DListPrint(pList);
-
-	DListDestory(&pList);
-	DListPrint(pList);
-
-}
-int main()
-{
-	TestDList1();
 	return 0;
 }
