@@ -1,10 +1,13 @@
 #define _CRT_SECURE_NO_WARNINGS 1 
+#pragma once
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
 #include<stdbool.h>
 
-typedef int QDataType;
+
+struct BinaryTreeNode;//Ç°ÖÃÉùÃ÷
+typedef struct BinaryTreeNode* QDataType;
 typedef struct QueueNode
 {
 	struct QueueNode* next;
