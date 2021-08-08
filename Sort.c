@@ -1,32 +1,54 @@
 #define _CRT_SECURE_NO_WARNINGS 1 
 #include"Sort.h"
-//打印函数
-void PrintArray(int* a, int n)
+//打印数组
+void PrintArray(int* arr, int n)
 {
-	for (int i = 0; i < n; ++i)
+	for (int i = 0; i < n; i++)
 	{
-		printf("%d ", a[i]);
+		printf("%d ", arr[i]);
 	}
-	printf("\n");
+	printf("\n------------------------\n");
 }
 
-//插入排序
-void InsertSort(int* a, int n)
+
+////插入排序
+//void InsertSort(int* arr, int n)
+//{
+//	assert(arr);
+//	int i = 0;
+//	int j = 0;
+//	for (i = 0; i < n; i++)
+//	{
+//		//第一趟找到i应该所在的下标
+//		for (j = i - 1; j >= 0; j--)
+//		{
+//			if (arr[j] < arr[i])
+//				break;
+//		}
+//		//第二趟，进行移动元素，将第j+1到第i的元素全部往后移动
+//		int k = 0;
+//		int temp = arr[i];
+//		for (k = i; k > j+1; k--)
+//		{
+//			arr[k] = arr[k - 1];
+//		}
+//		//将元素插入到正确位置
+//		arr[k] = temp;
+//	}
+//}
+
+//代码优化
+void InsertSort(int* arr, int n)
 {
-	assert(a);
-	int i = 0;
-	//边界控制不好，容易导致程序崩溃 比如i<n 
-	//建议：画图 + 写注释
-	for (i = 0; i < n - 1; i++)
+	for (int i = 0; i < n - 1 ; i++)
 	{
-		//把end+1的书籍插入到[0,end]的有序区间
 		int end = i;
-		int tmp = a[end + 1];
+		int temp = arr[end + 1];
 		while (end >= 0)
 		{
-			if (tmp < a[end])
+			if (arr[end] > temp)
 			{
-				a[end + 1] = a[end];
+				arr[end + 1] = arr[end];
 				end--;
 			}
 			else
@@ -34,29 +56,28 @@ void InsertSort(int* a, int n)
 				break;
 			}
 		}
-		a[end + 1] = tmp;
+		arr[end + 1] = temp;
 	}
 }
 
 //希尔排序
-void ShellSort(int* a, int n)
+void ShellSort(int* arr, int n)
 {
-	//1.gap>1相当于预排序，让数组接近有序
-	//2.gap == 1相当于直接插入排序，保证有序
+	//int gap = 3;gap随数据的规模而变动，
+	//gap > 1时，都是预排序，gap == 1时，就是直接插入排序
 	int gap = n;
 	while (gap > 1)
 	{
-		gap = gap / 3 + 1;//+1保证了最后一次gap一定为1
-		//gap为1时就相当于直接插入排序
-		for (int i = 0; i < n - gap; ++i)
+		gap = gap / 3 + 1;//+1 是为了保证gap可以取到1
+		for (int i = 0; i < n - gap; i++)
 		{
 			int end = i;
-			int tmp = a[end + gap];
+			int temp = arr[end + gap];
 			while (end >= 0)
 			{
-				if (tmp < a[end])
+				if (temp < arr[end])
 				{
-					a[end + gap] = a[end];
+					arr[end + gap] = arr[end];
 					end -= gap;
 				}
 				else
@@ -64,126 +85,48 @@ void ShellSort(int* a, int n)
 					break;
 				}
 			}
-			a[end + gap] = tmp;
+			arr[end + gap] = temp;
 		}
 	}
 }
-//交换
-void Swap(int* p1, int* p2)
-{
-	int tmp = *p1;
-	*p1 = *p2;
-	*p2 = tmp;
-}
+////选择排序
+//void SelectSort(int* arr, int n)
+//{
+//	//经典版
+//}
 
 //选择排序
-void SelectSort(int* a, int n)
+void SelectSort(int* arr, int n)
 {
-	assert(a);
-	int begin = 0;
-	int end = n - 1;
-	while (begin < end)
+	//优化版--同时选出最小的数和最大的数
+	int left = 0;
+	int right = n - 1;
+	while (left < right)
 	{
-		//在begin和end之间找出最小数和最大数的小标
-		int min_i, max_i;
-		min_i = max_i = begin;
-		for (int i = begin + 1; i <= end; i++)
+		int minIndex = left, maxIndex = left;
+		//选出最小值，最大值
+		for (int i = left; i <= right; i++)
 		{
-			if (a[i] > a[max_i])
-			{
-				max_i = i;
-			}
-			if (a[i] < a[min_i])
-			{
-				min_i = i;
-			}
+			if (arr[i] < arr[minIndex])
+				minIndex = i;
+			if (arr[i] > arr[maxIndex])
+				maxIndex = i;
 		}
-		//将最大值和最小值交换到两端的位置
-		Swap(&a[begin], &a[min_i]);
-		//如果max_i与begin位置重叠，需要进行修正，不然交换两次 == 没交换
-		if (begin == max_i)
+		//将最小值放到最左边，最大值放到最右边
+		int temp = arr[minIndex];
+		arr[minIndex] = arr[left];
+		arr[left] = temp;
+		//前者的交换可能会影响后面的交换
+		if (left == maxIndex)
 		{
-			max_i == min_i;
+			maxIndex = minIndex;
 		}
-		Swap(&a[end], &a[max_i]);
-		begin++;
-		end--;
+
+		temp = arr[maxIndex];
+		arr[maxIndex] = arr[right];
+		arr[right] = temp;
+		left++;
+		right--;
 	}
 }
 
-//堆排序
-void AdjustDwon(int* a, int n, int root)
-{
-
-	int parent = root;
-	int child = parent * 2 + 1;
-	while (child < n)
-	{
-		if (child < n && a[child + 1]>a[child])
-		{
-			child++;
-		}
-		if (a[child] > a[parent])
-		{
-			Swap(&a[child], &a[parent]);
-			parent = child;
-			child = parent * 2 + 1;
-		}
-	}
-}
-void HeapSort(int* a, int n)
-{
-	//排升序，建大堆
-	for (int i = (n - 1 - 1) / 2; i >= 0; i--)
-	{
-		AdjustDown(a, n, i);
-	}
-	int end = n - 1;
-	while (end > 0)
-	{
-		Swap(&a[0], &a[end]);
-		AdjustDwon(a, end, 0);
-		--end;
-	}
-}
-
-//单趟快速排序
-int PartSort(int* a, int begin, int end)
-{
-	int keyindex = end;
-	while (begin < end)
-	{
-		//begin找大
-		while (begin < end && a[begin] <= a[keyindex])
-		{
-			begin++;
-		}
-		//end找小
-		while (begin < end && a[end] >= a[keyindex])
-		{
-			end--;
-		}
-		Swap(&a[begin], &a[end]);
-	}
-	Swap(&a[begin], &a[keyindex]);
-	return begin;
-}
-
-//快速排序--递归分治
-void QuickSort(int* a, int left, int right)
-{
-	assert(a);
-	//if (left < right)
-	//{
-	//	int div = PartSort(a, left, right);
-	//	QuickSort(a, left, div - 1);
-	//	QuickSort(a, div + 1, right);
-	//}
-	//return;
-	if (left >= right)
-		return;
-
-	int div = PartSort(a, left, right);
-	QuickSort(a, left, div - 1);
-	QuickSort(a, div + 1, right);
-}
