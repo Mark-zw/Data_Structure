@@ -1,22 +1,11 @@
-#define _CRT_SECURE_NO_WARNINGS 1 
+#pragma once
 #include<stdio.h>
 #include<assert.h>
-
-//打印函数
-void PrintArray(int* a, int n);
-
+//打印数组
+void PrintArray(int* arr, int n);
 //插入排序
-void InsertSort(int* a, int n);
-
+void InsertSort(int* arr, int n);
 //希尔排序
-void ShellSort(int* a, int n);
-
+void ShellSort(int* arr, int n);
 //选择排序
-void SelectSort(int* a, int n);
-
-//堆排序
-void AdjustDwon(int* a, int n, int root);
-void HeapSort(int* a, int n);
-
-//快速排序
-void QuickSort(int* a, int left, int right);
+void SelectSort(int* arr, int n);
