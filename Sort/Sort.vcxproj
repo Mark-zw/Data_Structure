@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{d9cee50f-d64a-4fc9-b642-ad7cc760e929}</ProjectGuid>
+    <ProjectGuid>{57702e34-865d-4826-98cd-7b2676cca989}</ProjectGuid>
     <RootNamespace>Sort</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -139,11 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Sort.c" />
-    <ClCompile Include="test.c" />
+    <ClInclude Include="Sort.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sort.h" />
+    <ClCompile Include="Sort.c" />
+    <ClCompile Include="test.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
