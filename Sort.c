@@ -129,4 +129,115 @@ void SelectSort(int* arr, int n)
 		right--;
 	}
 }
-
+//两数交换
+void Swap(int* p1, int* p2)
+{
+	int temp = *p1;
+	*p1 = *p2;
+	*p2 = temp;
+}
+//堆向下调整  大堆向下调整、小堆向下调整 
+void AdjustDown_small(int* arr, int n, int root)
+{
+	//小堆向下调整
+	int parent = root;
+	int child = 2 * parent + 1;
+	while (child < n)
+	{
+		if (arr[child] > arr[child + 1])
+		{
+			child++;
+		}
+		if (arr[child] < arr[parent])
+		{
+			Swap(&arr[child], &arr[parent]);
+			parent = child;
+			child = 2 * parent + 1;
+		}
+		else
+			break;
+	}
+}
+void AdjustDown_big(int* arr, int n, int root)
+{
+	//小堆向下调整
+	int parent = root;
+	int child = 2 * parent + 1;
+	while (child < n)
+	{
+		if (child + 1 < n && arr[child] < arr[child + 1] )//&& 操作符的特性  注意要先检查然后才判断，避免越界访问
+		{
+			child++;
+		}
+		if (arr[child] > arr[parent])
+		{
+			Swap(&arr[child], &arr[parent]);
+			parent = child;
+			child = 2 * parent + 1;
+		}
+		else
+			break;
+	}
+}
+//堆排序
+void HeapSort(int* arr, int n)
+{
+	//根据数组建立堆 排升序建大堆，排降序建小堆
+	int i = 0;
+	for (i = (n - 1 - 1) / 2; i >= 0; i--)
+	{
+		AdjustDown_big(arr, n , i);//n实际上是数组右边边界
+	}
+	//每次都将堆顶的元素跟堆最后一个元素交换，堆的大小-1
+	i = n - 1;
+	while (i > 0)
+	{
+		Swap(&arr[0], &arr[i]);
+		AdjustDown_big(arr, i, 0);
+		i--;
+	}
+}
+//冒泡排序
+void BubbleSort(int* arr, int n)
+{
+	int i = 0;
+	int j = 0;
+	int flag = 0;
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n -1 - i; j++)
+		{
+			if (arr[j] > arr[j + 1])
+			{
+				Swap(&arr[j], &arr[j + 1]);
+				flag = 1;
+			}
+		}
+		if (flag == 0)
+			break;
+	}
+}
+//快速排序
+void QuickSort(int* arr, int n)
+{
+	int left = 0;
+	int right = n - 1;
+	int key = left;
+	while (left < right)
+	{
+		//right找比key小的数
+		while (right > left && arr[right] >= arr[key])
+		{
+			right--;
+		}
+		//left找比key大的数
+		while ( left < right && arr[left] <= arr[key])
+		{
+			left++;
+		}
+		if (left < right)
+			Swap(&arr[left], &arr[right]);
+	}
+	//将key与相遇位置交换
+	Swap(&arr[key], &arr[right]);
+}
