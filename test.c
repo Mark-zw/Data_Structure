@@ -36,9 +36,9 @@ void TestOP()
 	HeapSort(a4, N);
 	int end4 = clock();
 
-	//int begin5 = clock();
-	//QuickSort(a5, 0, N - 1);
-	//int end5 = clock();
+	int begin5 = clock();
+	QuickSort(a5, 0, N - 1);
+	int end5 = clock();
 
 	//int begin6 = clock();
 	//MergeSort(a6, N);
@@ -48,7 +48,7 @@ void TestOP()
 	printf("ShellSort: %d\n", end2 - begin2);
 	printf("SelectSort:%d\n", end3 - begin3);
 	printf("HeapSort: %d\n", end4 - begin4);
-	//printf("QuickSort:%d\n", end5 - begin5);
+	printf("QuickSort:%d\n", end5 - begin5);
 	//printf("MergeSort:%d\n", end6 - begin6);
 
 	free(a1);
@@ -58,17 +58,30 @@ void TestOP()
 	free(a5);
 	free(a6);
 }
+//int main()
+//{
+//	int arr[] = { 11,0,2,4,3,1,8,9,10,7,6 };
+//	int n = sizeof(arr) / sizeof(arr[0]);
+//	//InsertSort(arr, n);
+//	//ShellSort(arr, n);
+//	//SelectSort(arr, n);
+//	//HeapSort(arr, n);
+//	//BubbleSort(arr, n);
+//	//QuickSort(arr, 0, n - 1);
+//
+//	TestOP();
+//	//PrintArray(arr, n);
+//	return 0;
+//}
+
+
 int main()
 {
-	int arr[] = { 11,0,2,4,3,1,8,9,10,7,6 };
-	int n = sizeof(arr) / sizeof(arr[0]);
-	//InsertSort(arr, n);
-	//ShellSort(arr, n);
-	//SelectSort(arr, n);
-	//HeapSort(arr, n);
-	BubbleSort(arr, n);
-
-	//TestOP();
-	PrintArray(arr, n);
+	unsigned char i = 7; 
+	int j = 0;
+	for (; i > 0; i -= 3) {
+		++j;
+	}
+	printf("%d\n", j); 
 	return 0;
 }
