@@ -217,11 +217,15 @@ void BubbleSort(int* arr, int n)
 			break;
 	}
 }
-//快速排序
-void QuickSort(int* arr, int n)
+//hoare版本 左右指针版
+int PartSort(int* arr, int begin, int end)
 {
-	int left = 0;
-	int right = n - 1;
+	//优化 三数取中
+	int mid = GetMidIndex(arr, begin, end);
+	Swap(arr[begin], arr[mid]);
+
+	int left = begin;
+	int right = end;
 	int key = left;
 	while (left < right)
 	{
@@ -231,13 +235,77 @@ void QuickSort(int* arr, int n)
 			right--;
 		}
 		//left找比key大的数
-		while ( left < right && arr[left] <= arr[key])
+		while (left < right && arr[left] <= arr[key])
 		{
 			left++;
 		}
 		if (left < right)
 			Swap(&arr[left], &arr[right]);
 	}
+	int meet = left;
 	//将key与相遇位置交换
-	Swap(&arr[key], &arr[right]);
+	Swap(&arr[key], &arr[meet]);
+	return meet;
 }
+//快速排序
+void QuickSort(int* arr, int begin,int end)
+{
+	if (begin >= end)
+		return;
+	int meet = PartSort(arr, begin, end);
+	//[begin,meet-1] [meet+1 end]
+	QuickSort(arr, begin, meet - 1);
+	QuickSort(arr, meet + 1, end);
+}
+int GetMidIndex(int* arr, int left, int right)
+{
+	int mid = (left + right) >> 1;
+	if (arr[left] < arr[mid])
+	{
+		if (arr[mid] < arr[right])
+			return mid;
+		else if (arr[left] > arr[right])
+			return left;
+		else
+			return right;
+	}
+	else
+	{
+		if (arr[left] > arr[right])
+			return right;
+		else if (arr[mid] > arr[right])
+			return mid;
+		else
+			return right;
+	}
+}
+
+//挖坑法
+int PartSort1(int* arr, int begin, int end)
+{
+	//挖坑，形成坑位
+	int key = arr[begin];
+	int left = begin;
+	int right = end;
+	while (left < right)
+	{
+		//右边找小
+		while (left < right && arr[right] >= key)
+		{
+			right--;
+		}
+		//填坑，形成新的坑位
+		arr[left] = arr[right];
+		//左边找大
+		while (left < right && arr[left] <= key)
+		{
+			left++;
+		}
+		//填坑，形成新的坑位
+		arr[right] = arr[left];
+	}
+	//left = right时相遇
+	arr[left] = key;
+}
+
+//前后指针法
