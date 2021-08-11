@@ -217,12 +217,104 @@ void BubbleSort(int* arr, int n)
 			break;
 	}
 }
+
+////快速排序
+//void QuickSort(int* arr, int begin,int end)
+//{
+//	if (begin >= end)
+//		return;
+//
+//	int meet = PartSort3(arr, begin, end);
+//	//[begin,meet-1] [meet+1 end]
+//	QuickSort(arr, begin, meet - 1);
+//	QuickSort(arr, meet + 1, end);
+//}
+// 
+//快速排序 小区间优化版
+void QuickSort(int* arr, int begin, int end)
+{
+	if (begin >= end)
+		return;
+	//1.如果这个子区间的数据较多，继续选key单趟，分割
+	if (end - begin > 10)
+	{
+		int meet = PartSort3(arr, begin, end);
+		//[begin,meet-1] [meet+1 end]
+		QuickSort(arr, begin, meet - 1);
+		QuickSort(arr, meet + 1, end);
+	}
+	//2.如果子区间的数据较小，再去分治递归就不太好，可以用其它方式代替，使其有序
+	//使用插入排序
+	else
+	{
+		InsertSort(arr + begin, end - begin + 1);//小区间优化
+	}
+}
+//快排非递归版  递归现代计算机性能优化很好，已经不是问题，
+//递归最大的问题是递归的深度太深，程序本身没问题，但是栈空间不够，导致栈溢出
+//这个时候只能改成非递归的方式，改非递归的方式有两种
+//1.直接改循环  比如：斐波那契数列求解
+//2.栈stack模拟递归，比如树遍历的递归和快排非递归，只能用Stack栈存储数据模拟递归的过程
+void QuickSortNonR(int* arr, int begin, int end)
+{
+	Stack st;
+	StackInit(&st);
+	StackPush(&st, begin);
+	StackPush(&st, end);
+
+	while (!StackEmpty(&st))
+	{
+		int left, right;
+		right = StackTop(&st);
+		StackPop(&st);
+
+		left = StackTop(&st);
+		StackPop(&st);
+
+		int meet = PartSort3(arr, left, right);
+		if (left < meet - 1)
+		{
+			StackPush(&st, left);
+			StackPush(&st, meet - 1);
+		}
+		if (meet + 1 < right)
+		{
+			StackPush(&st, meet + 1);
+			StackPush(&st, right);
+		}
+	}
+	StakDestroy(&st);
+}
+
+//三数取中优化
+int GetMidIndex(int* arr, int left, int right)
+{
+	int mid = (left + right) >> 1;
+	if (arr[left] < arr[mid])
+	{
+		if (arr[mid] < arr[right])
+			return mid;
+		else if (arr[left] > arr[right])
+			return left;
+		else
+			return right;
+	}
+	else
+	{
+		if (arr[left] > arr[right])
+			return right;
+		else if (arr[mid] > arr[right])
+			return mid;
+		else
+			return right;
+	}
+}
 //hoare版本 左右指针版
-int PartSort(int* arr, int begin, int end)
+int PartSort1(int* arr, int begin, int end)
 {
 	//优化 三数取中
 	int mid = GetMidIndex(arr, begin, end);
-	Swap(arr[begin], arr[mid]);
+	Swap(&arr[begin], &arr[mid]);
 
 	int left = begin;
 	int right = end;
@@ -247,42 +339,14 @@ int PartSort(int* arr, int begin, int end)
 	Swap(&arr[key], &arr[meet]);
 	return meet;
 }
-//快速排序
-void QuickSort(int* arr, int begin,int end)
-{
-	if (begin >= end)
-		return;
-	int meet = PartSort(arr, begin, end);
-	//[begin,meet-1] [meet+1 end]
-	QuickSort(arr, begin, meet - 1);
-	QuickSort(arr, meet + 1, end);
-}
-int GetMidIndex(int* arr, int left, int right)
-{
-	int mid = (left + right) >> 1;
-	if (arr[left] < arr[mid])
-	{
-		if (arr[mid] < arr[right])
-			return mid;
-		else if (arr[left] > arr[right])
-			return left;
-		else
-			return right;
-	}
-	else
-	{
-		if (arr[left] > arr[right])
-			return right;
-		else if (arr[mid] > arr[right])
-			return mid;
-		else
-			return right;
-	}
-}
 
 //挖坑法
-int PartSort1(int* arr, int begin, int end)
+int PartSort2(int* arr, int begin, int end)
 {
+	//优化 三数取中
+	int mid = GetMidIndex(arr, begin, end);
+	Swap(&arr[begin], &arr[mid]);
+
 	//挖坑，形成坑位
 	int key = arr[begin];
 	int left = begin;
@@ -309,3 +373,82 @@ int PartSort1(int* arr, int begin, int end)
 }
 
 //前后指针法
+int PartSort3(int* arr, int begin, int end)
+{
+	//优化 三数取中
+	int mid = GetMidIndex(arr, begin, end);
+	Swap(&arr[begin], &arr[mid]);
+
+	int key = begin;
+	int prev = begin;
+	int cur = begin + 1;
+	//优化
+	while (cur <= end)
+	{
+		if (arr[cur] < arr[key] && ++prev != cur)
+		{
+			Swap(&arr[cur], &arr[prev]);
+		}
+		cur++;
+	}
+	//while (cur <= end)
+	//{
+	//	//cur往后找比key小的数
+	//	while (cur<= end && arr[cur] < arr[key])
+	//	{
+	//		cur++;
+	//	}
+	//	//找到小的后就跟prev位置是数进行交换，交换前prev要先移到下一个位置
+	//	Swap(&arr[++prev], &arr[cur]);
+	//}
+	//将key的位置跟prev交换一下
+	Swap(&arr[key], &arr[prev]);
+	//key = prev;
+	//return key;
+	return prev;
+}
+//归并子函数
+void _MergeSort(int* arr, int begin, int end,int* temp)
+{
+	if (begin >= end)
+		return;
+
+	int mid = (begin + end) >> 1;
+	//[begin,mid] [mid,end]
+	_MergeSort(arr, begin, mid, temp);
+	_MergeSort(arr, mid + 1, end, temp);
+
+	//归并：将两段子区间归并到temp中，并拷贝回去
+	int begin1 = begin, end1 = mid;
+	int begin2 = mid + 1, end2 = end;
+	int i = begin;
+	while (begin1 <= end1 && begin2 <= end2)
+	{
+		if (arr[begin1] < arr[begin2])
+			temp[i++] = arr[begin1++];
+		else
+			temp[i++] = arr[begin2++];
+	}
+	while(begin1<=end1)
+		temp[i++] = arr[begin1++];
+	while (begin2 <= end2)
+		temp[i++] = arr[begin2++];
+	//将合并的结果拷贝回原数组arr中
+	for (int i = begin; i <= end; i++)
+	{
+		arr[i] = temp[i];
+	}
+}
+
+//归并排序  需要借助一个临时数组
+void MergeSort(int* arr, int n)
+{
+	int* temp = (int*)malloc(sizeof(int) * n);
+	if (temp == NULL)
+	{
+		printf("malloc failed!\n");
+		return;
+	}
+	_MergeSort(arr, 0, n - 1,temp);
+	free(temp);
+}
