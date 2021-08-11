@@ -1,6 +1,7 @@
 #pragma once
 #include<stdio.h>
 #include<assert.h>
+#include"Stack.h"
 //打印数组
 void PrintArray(int* arr, int n);
 //插入排序
@@ -18,3 +19,13 @@ void HeapSort(int* arr, int n);
 void BubbleSort(int* arr, int n);
 //快速排序
 void QuickSort(int* arr, int n);
+//hoare版本 左右指针版
+int PartSort1(int* arr, int begin, int end);
+//挖坑法
+int PartSort2(int* arr, int begin, int end);
+//前后指针法
+int PartSort3(int* arr, int begin, int end);
+//三数取中优化
+int GetMidIndex(int* arr, int left, int right);
+//快排非递归版
+void QuickSortNonR(int* arr, int begin, int end);
