@@ -29,3 +29,5 @@ int PartSort3(int* arr, int begin, int end);
 int GetMidIndex(int* arr, int left, int right);
 //øÏ≈≈∑«µ›πÈ∞Ê
 void QuickSortNonR(int* arr, int begin, int end);
+//πÈ≤¢≈≈–Ú
+void MergeSort(int* arr, int n);
