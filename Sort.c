@@ -261,6 +261,7 @@ void QuickSortNonR(int* arr, int begin, int end)
 	StackInit(&st);
 	StackPush(&st, begin);
 	StackPush(&st, end);
+
 	while (!StackEmpty(&st))
 	{
 		int left, right;
@@ -405,4 +406,49 @@ int PartSort3(int* arr, int begin, int end)
 	//key = prev;
 	//return key;
 	return prev;
+}
+//归并子函数
+void _MergeSort(int* arr, int begin, int end,int* temp)
+{
+	if (begin >= end)
+		return;
+
+	int mid = (begin + end) >> 1;
+	//[begin,mid] [mid,end]
+	_MergeSort(arr, begin, mid, temp);
+	_MergeSort(arr, mid + 1, end, temp);
+
+	//归并：将两段子区间归并到temp中，并拷贝回去
+	int begin1 = begin, end1 = mid;
+	int begin2 = mid + 1, end2 = end;
+	int i = begin;
+	while (begin1 <= end1 && begin2 <= end2)
+	{
+		if (arr[begin1] < arr[begin2])
+			temp[i++] = arr[begin1++];
+		else
+			temp[i++] = arr[begin2++];
+	}
+	while(begin1<=end1)
+		temp[i++] = arr[begin1++];
+	while (begin2 <= end2)
+		temp[i++] = arr[begin2++];
+	//将合并的结果拷贝回原数组arr中
+	for (int i = begin; i <= end; i++)
+	{
+		arr[i] = temp[i];
+	}
+}
+
+//归并排序  需要借助一个临时数组
+void MergeSort(int* arr, int n)
+{
+	int* temp = (int*)malloc(sizeof(int) * n);
+	if (temp == NULL)
+	{
+		printf("malloc failed!\n");
+		return;
+	}
+	_MergeSort(arr, 0, n - 1,temp);
+	free(temp);
 }
