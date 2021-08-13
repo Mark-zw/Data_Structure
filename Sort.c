@@ -465,3 +465,49 @@ void MergeSortNonR(int* arr, int n)
 	_MergeSort(arr, 0, n - 1, temp);
 	free(temp);
 }
+//计数排序
+//绝对映射、相对映射
+void CountSort(int* arr, int n)
+{
+	int max = arr[0];
+	int min = arr[0];
+	//遍历数组找出最小最大值
+	for (int i = 0; i < n; i++)
+	{
+		if (arr[i] > max)
+		{
+			max = arr[i];
+		}
+		if (arr[i] < min)
+		{
+			min = arr[i];
+		}
+	}
+	int range = max - min + 1;
+	int* temp = (int*)malloc(sizeof(int) * range);
+	if (temp == NULL)
+	{
+		printf("malloc fail!\n");
+		return;
+	}
+	for (int i = 0; i < range; i++)
+	{
+		temp[i] = 0;
+	}
+	//进行计数
+	for (int i = 0; i < n; i++)
+	{
+		temp[arr[i] - min]++;
+	}
+	//拷贝回原数组
+	int j = 0;
+	for (int i = 0; i < range; i++)
+	{
+		while (temp[i]--)
+		{
+			arr[j++] = i + min;
+		}
+	}
+	free(temp);
+	temp = NULL;
+}
