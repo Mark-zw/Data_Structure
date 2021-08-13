@@ -452,3 +452,16 @@ void MergeSort(int* arr, int n)
 	_MergeSort(arr, 0, n - 1,temp);
 	free(temp);
 }
+
+//πÈ≤¢≈≈–Ú--∑«µ›πÈ∞Ê
+void MergeSortNonR(int* arr, int n)
+{
+	int* temp = (int*)malloc(sizeof(int) * n);
+	if (temp == NULL)
+	{
+		printf("malloc failed!\n");
+		return;
+	}
+	_MergeSort(arr, 0, n - 1, temp);
+	free(temp);
+}
