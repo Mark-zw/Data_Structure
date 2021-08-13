@@ -1,0 +1,10 @@
+﻿  test.c
+D:\QiYiCat\c practice\Data_Structure\Basic_DS\New\Sort\Sort\test.c(6,12): warning C4013: “time”未定义；假设外部返回 int
+D:\QiYiCat\c practice\Data_Structure\Basic_DS\New\Sort\Sort\test.c(27,20): warning C4013: “clock”未定义；假设外部返回 int
+D:\QiYiCat\c practice\Data_Structure\Basic_DS\New\Sort\Sort\test.c(40,21): warning C4020: “QuickSort”: 实参太多
+  正在生成代码
+  5 of 6 functions (83.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  已完成代码的生成
+  Sort.vcxproj -> D:\QiYiCat\c practice\Data_Structure\Basic_DS\New\Sort\Release\Sort.exe

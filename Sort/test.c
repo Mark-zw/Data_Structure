@@ -70,9 +70,10 @@ int main()
 	//QuickSort(arr, 0, n - 1);
 	//QuickSortNonR(arr, 0, n - 1);
 	//MergeSort(arr, n);
+	CountSort(arr, n);
 
-	TestOP();
-	//PrintArray(arr, n);
+	//TestOP();
+	PrintArray(arr, n);
 	return 0;
 }
 
