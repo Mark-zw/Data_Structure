@@ -31,3 +31,5 @@ int GetMidIndex(int* arr, int left, int right);
 void QuickSortNonR(int* arr, int begin, int end);
 //πÈ≤¢≈≈–Ú
 void MergeSort(int* arr, int n);
+//πÈ≤¢≈≈–Ú--∑«µ›πÈ∞Ê
+void MergeSortNonR(int* arr, int n);
