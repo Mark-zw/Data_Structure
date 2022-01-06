@@ -1,60 +1,47 @@
 #define _CRT_SECURE_NO_WARNINGS 1 
-#include"SeqList_static.h"
+#include"SeqList_Dynamic.h"
 int main()
 {
 	SeqList seq;
 	SeqListInit(&seq);
-	SeqListPushBack(&seq, 66);
-	SeqListPushBack(&seq, 77);
-	SeqListPushBack(&seq, 88);
-	SeqListPushBack(&seq, 99);
-
-	SeqListPrint(&seq);
-	printf("The Length of SeqList is %d\n", SeqListLength(&seq));
-
-	SeqListPopBack(&seq);
-	SeqListPrint(&seq);
-	printf("The Length of SeqList is %d\n", SeqListLength(&seq));
-
-	SeqListPopBack(&seq);
-	SeqListPrint(&seq);
-	printf("The Length of SeqList is %d\n", SeqListLength(&seq));
-
-	SeqListPopBack(&seq);
-	SeqListPrint(&seq);
-	printf("The Length of SeqList is %d\n", SeqListLength(&seq));
-
 	SeqListPushFront(&seq, 11);
-	SeqListPrint(&seq);
-	printf("The Length of SeqList is %d\n", SeqListLength(&seq));
-
 	SeqListPushFront(&seq, 22);
-	SeqListPrint(&seq);
-	printf("The Length of SeqList is %d\n", SeqListLength(&seq));
-
 	SeqListPushFront(&seq, 33);
 	SeqListPrint(&seq);
-	printf("The Length of SeqList is %d\n", SeqListLength(&seq));
-
-	SeqListPushFront(&seq, 44);
-	SeqListPrint(&seq);
-	printf("The Length of SeqList is %d\n", SeqListLength(&seq));
 
 	SeqListPopFront(&seq);
-	SeqListPrint(&seq);
-	printf("The Length of SeqList is %d\n", SeqListLength(&seq));
-
+	SeqListPopFront(&seq);
+	SeqListPopFront(&seq);
 	SeqListPopFront(&seq);
 	SeqListPrint(&seq);
-	printf("The Length of SeqList is %d\n", SeqListLength(&seq));
 
-	SeqListPopFront(&seq);
+	SeqListPushBack(&seq, 44);
+	SeqListPushBack(&seq, 55);
+	SeqListPushBack(&seq, 66);
+	SeqListPushBack(&seq, 77);
 	SeqListPrint(&seq);
-	printf("The Length of SeqList is %d\n", SeqListLength(&seq));
 
-	SeqListPopFront(&seq);
+	SeqListPopBack(&seq);
+	SeqListPopBack(&seq);
+	SeqListPopBack(&seq);
 	SeqListPrint(&seq);
-	printf("The Length of SeqList is %d\n", SeqListLength(&seq));
 
+	SeqListInsert(&seq, 0, 333);
+	SeqListInsert(&seq, 1, 222);
+	SeqListInsert(&seq, 2, 111);
+	SeqListInsert(&seq, 3, 99);
+	SeqListPrint(&seq);
+
+	SeqListErase(&seq, 2);
+	SeqListErase(&seq, 1);
+	SeqListErase(&seq, 0);
+	SeqListPrint(&seq);
+
+	int index = SeqListFind_By_Val(&seq, 99);
+	printf("the index of 99 is %d!\n", index);
+	SeqListUpdata(&seq, index, 888);
+	SeqListPrint(&seq);
+
+	SeqListDestory(&seq);
 	return 0;
 }
